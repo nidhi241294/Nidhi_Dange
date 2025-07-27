@@ -1,0 +1,75 @@
+/* App.css */
+
+.chat-container {
+  max-width: 600px;
+  margin: 40px auto;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.chat-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  height: 400px;
+  overflow-y: auto; 
+  padding: 10px;
+  background: #f9f9f9;
+  display: flex; /* Use flexbox for messages */
+  flex-direction: column; /* Stack messages vertically */
+}
+
+.chat-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%;
+  /* Removed 'display: block;' - let flexbox handle it */
+}
+
+.chat-msg.user {
+  background: #d1e7dd;
+  align-self: flex-end; /* Aligns user messages to the right */
+  text-align: right;
+}
+
+.chat-msg.bot {
+  background: #e2e3e5;
+  align-self: flex-start; /* Aligns bot messages to the left */
+  text-align: left;
+}
+
+.chat-input {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align items vertically in the center */
+  gap: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer; /* Add pointer cursor */
+}
+
+.rag-toggle { /* New style for the RAG checkbox label */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    white-space: nowrap; /* Prevent "Use RAG" from wrapping */
+}
+
+.rag-toggle input[type="checkbox"] {
+    margin: 0; /* Remove default margin */
+}
