@@ -1,5 +1,3 @@
-# main.py
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, RagSequenceForGeneration, RagTokenizer
@@ -44,7 +42,7 @@ except Exception as e:
     rag_enabled = False
     print(f"Failed to load RAG pipeline: {e}. RAG functionality will be disabled.")
     print("Please ensure you have the correct models and tokenizer dependencies properly installed.")
-    print("Consider running: pip install transformers[torch] accelerate") # Suggest common installs for models
+    print("Consider running: pip install transformers[torch] accelerate") 
 
 # Simulated document store (EXPANDED KNOWLEDGE BASE)
 knowledge_base = [
@@ -73,7 +71,7 @@ if rag_enabled: # Only initialize if RAG models loaded
     knowledge_base_vectors = tfidf_vectorizer.transform(knowledge_base)
 
 
-# Session memory for DialoGPT (global for simplicity, consider a more robust solution for production)
+# Session memory for DialoGPT 
 chat_history_ids = None
 
 class Message(BaseModel):
@@ -141,7 +139,7 @@ def chat(msg: Message):
                 generated_text = rag_tokenizer.decode(output_ids[0], skip_special_tokens=True)
                 
                 # Post-processing to remove the input prompt from the generated text
-                # Find where the actual answer starts after the "Answer:" part
+                
                 answer_marker = "Answer:"
                 if answer_marker in generated_text:
                     response = generated_text.split(answer_marker, 1)[-1].strip()
