@@ -35,6 +35,10 @@ try:
     rag_tokenizer = RagTokenizer.from_pretrained("facebook/rag-sequence-nq")
     rag_model = RagSequenceForGeneration.from_pretrained("facebook/rag-sequence-nq")
 
+    print("Attempting to load BART-base for RAG generation (simulated context).")
+    rag_tokenizer = AutoTokenizer.from_pretrained("facebook/bart-base") # Changed to BART
+    rag_model = AutoModelForCausalLM.from_pretrained("facebook/bart-base") # Changed to BART
+    
     rag_enabled = True
     print("RAG pipeline (using BART-base) loaded successfully.")
 
