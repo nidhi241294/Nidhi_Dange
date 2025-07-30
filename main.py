@@ -115,7 +115,7 @@ def chat(msg: Message):
 
         if context:
             # Step 2: Use RAG Model for generation with context
-            # For general text-to-text models like BART, we explicitly add context to the prompt
+           
             query_for_rag_generation = f"Context: {context}\n\nQuestion: {user_input}\n\nAnswer:"
             print(f"Sending to RAG model for generation: '{query_for_rag_generation}'")
             
