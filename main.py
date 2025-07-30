@@ -36,42 +36,6 @@ rag_enabled = False
 try:
     rag_tokenizer = RagTokenizer.from_pretrained("facebook/rag-sequence-nq")
     rag_model = RagSequenceForGeneration.from_pretrained("facebook/rag-sequence-nq")
-    
-    # --- IMPORTANT CHANGE START ---
-    # Instead of creating a generic 'text-generation' pipeline for RagSequenceForGeneration,
-    # we will use the model's own generate method with tokenizer.
-    # The 'device' parameter should be used when loading the model, not when creating the pipeline this way.
-    # rag_model.to(torch.device("cuda" if torch.cuda.is_available() else "cpu")) # If you want to explicitly move to GPU
-
-    # The RagSequenceForGeneration is an end-to-end RAG model.
-    # It has its own internal retriever. If you want it to retrieve from YOUR
-    # knowledge base, you need to build an *index* for it.
-    # For now, we will use it as a general generation model that might
-    # also retrieve from its pre-trained index (which is NQ dataset).
-    #
-    # If the goal is to use *your* simulated `knowledge_base` with a generative model,
-    # `RagSequenceForGeneration` might not be the most straightforward choice
-    # without building a proper FAISS index for it.
-    #
-    # Let's try to make `RagSequenceForGeneration` work for now by just calling generate,
-    # and feeding it the question. The context you retrieve via TF-IDF won't be
-    # directly used by `rag_model.generate` unless you provide it as `input_ids`
-    # along with `retrieved_doc_embeds`, which requires more setup (FAISS index).
-    #
-    # Given your current setup (simulated TF-IDF context), it's probably better
-    # to use a more general-purpose sequence-to-sequence model (like T5 or BART)
-    # that *can* take context as part of the input prompt.
-    #
-    # Let's change the RAG model to a general sequence-to-sequence model for demo.
-    # If you *insist* on `RagSequenceForGeneration` for now, you will still get limited
-    # use of your `knowledge_base` as `RagSequenceForGeneration` does its own retrieval.
-
-    # --- Let's simplify and use a general purpose text-to-text generation model (like a distilled BART)
-    # This will allow your `knowledge_base` to actually influence the output when passed as context.
-    print("Attempting to load BART-base for RAG generation (simulated context).")
-    rag_tokenizer = AutoTokenizer.from_pretrained("facebook/bart-base") # Changed to BART
-    rag_model = AutoModelForCausalLM.from_pretrained("facebook/bart-base") # Changed to BART
-    # --- IMPORTANT CHANGE END ---
 
     rag_enabled = True
     print("RAG pipeline (using BART-base) loaded successfully.")
